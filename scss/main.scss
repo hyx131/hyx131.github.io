@@ -1,20 +1,5 @@
-@function multiple-box-shadow($n) {
-  $value: #{random(2000)}px #{random(2000)}px #fff;
-  @for $i from 2 through $n {
-    $value: #{$value}, #{random(2000)}px #{random(2000)}px #fff;
-  }
-  @return unquote($value);
-}
-
-$shadows-small: multiple-box-shadow(700);
-$shadows-medium: multiple-box-shadow(200);
-$shadows-big: multiple-box-shadow(100);
-
-$primary-color: #444;
-$secondary-color: pink;
-$show-home-image: true;
-$home-image: url(../public/img/cat.jpg);
-$background-opacity: 0.9;
+@import "config";
+@import "menu";
 
 html {
   height: 100%;
@@ -76,31 +61,7 @@ html {
   }
 }
 
-@keyframes animStar {
-  from {
-    transform: translateY(0px);
-  }
-  to {
-    transform: translateY(-2000px);
-  }
-}
-
 /************************************ ANIMATED BACKGROUND *********************************/
-
-@mixin easeOut {
-  transition: all 0.5s ease-out; // all = anything that is transition-able, including color
-}
-
-// // @mixin background {
-// //   @if $show-home-image {
-// //     // & will work in here cuz @mixin is being placed in the body
-// //     &#bg-img {
-// //       background: $home-image;
-// //       background-attachment: fixed;
-// //       background-size: cover;
-// //     }
-// //   }
-// // }
 
 // select everything with *
 * {
