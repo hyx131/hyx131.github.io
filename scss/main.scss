@@ -1,4 +1,177 @@
+@function multiple-box-shadow($n) {
+  $value: #{random(2000)}px #{random(2000)}px #fff;
+  @for $i from 2 through $n {
+    $value: #{$value}, #{random(2000)}px #{random(2000)}px #fff;
+  }
+  @return unquote($value);
+}
+
+$shadows-small: multiple-box-shadow(700);
+$shadows-medium: multiple-box-shadow(200);
+$shadows-big: multiple-box-shadow(100);
+
+$primary-color: #444;
+$secondary-color: pink;
+$show-home-image: true;
+$home-image: url(../public/img/cat.jpg);
+$background-opacity: 0.9;
+
+html {
+  height: 100%;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+}
+
+#stars {
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: $shadows-small;
+  animation: animStar 50s linear infinite;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: $shadows-small;
+  }
+}
+
+#stars2 {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow: $shadows-medium;
+  animation: animStar 100s linear infinite;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: $shadows-medium;
+  }
+}
+
+#stars3 {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+  box-shadow: $shadows-big;
+  animation: animStar 150s linear infinite;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: $shadows-big;
+  }
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+/************************************ ANIMATED BACKGROUND *********************************/
+
+@mixin easeOut {
+  transition: all 0.5s ease-out; // all = anything that is transition-able, including color
+}
+
+// // @mixin background {
+// //   @if $show-home-image {
+// //     // & will work in here cuz @mixin is being placed in the body
+// //     &#bg-img {
+// //       background: $home-image;
+// //       background-attachment: fixed;
+// //       background-size: cover;
+// //     }
+// //   }
+// // }
+
+// select everything with *
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: #444;
+  // @include background();
+  background: $primary-color;
   color: white;
+  height: 100%;
+  margin: 0;
+  font-family: "Segoe UI", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+}
+
+// headings:
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 400;
+
+  // & attaches class to h1/h2/h3, whcihever has it
+  &.lg-heading {
+    font-size: 6rem;
+  }
+
+  &.sm-heading {
+    margin-bottom: 2rem;
+    padding: 0.2rem 1rem; // 0.2 top and botton, 1 left and right
+    background: rgba(lighten($primary-color, 2), 0.5);
+  }
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+header {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+}
+
+.text-secondary {
+  color: $secondary-color;
+}
+
+main {
+  padding: 4rem;
+  height: 100%;
+
+  .icons {
+    margin-top: 1rem;
+
+    a {
+      padding: 0.4rem;
+
+      &:hover {
+        color: $secondary-color;
+        @include easeOut();
+      }
+    }
+  }
+
+  &#home {
+    overflow: hidden;
+    h1 {
+      margin-top: 20vh;
+    }
+  }
 }

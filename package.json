@@ -19,5 +19,6 @@
   "homepage": "https://github.com/hyx131/hyx131.github.io#readme",
   "dependencies": {
     "node-sass": "^4.12.0"
-  }
+  },
+  "devDependencies": {}
 }
