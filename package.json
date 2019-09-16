@@ -1,0 +1,23 @@
+{
+  "name": "hyx131.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "node-sass -w scss/ -o public/css/ --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyx131/hyx131.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hyx131/hyx131.github.io/issues"
+  },
+  "homepage": "https://github.com/hyx131/hyx131.github.io#readme",
+  "dependencies": {
+    "node-sass": "^4.12.0"
+  }
+}
