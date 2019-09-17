@@ -184,6 +184,17 @@ main {
   }
 }
 
+// contact page
+.boxes {
+  div {
+    @include easeOut;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
 // button styles
 .btn-dark {
   display: block;
