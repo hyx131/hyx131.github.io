@@ -32,6 +32,14 @@
     transform: translate3d(0, -100%, 0);
     font-size: 24px;
   }
+
+  .about-info {
+    grid-template-areas:
+      "bio"
+      "job1"
+      "job2";
+    grid-template-columns: 1fr;
+  }
 }
 
 // smartphones
