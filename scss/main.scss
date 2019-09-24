@@ -13,16 +13,6 @@ html {
   background: transparent;
   box-shadow: $shadows-small;
   animation: animStar 50s linear infinite;
-
-  // &:after {
-  //   content: " ";
-  //   position: absolute;
-  //   top: 2000px;
-  //   width: 1px;
-  //   height: 1px;
-  //   background: transparent;
-  //   box-shadow: $shadows-small;
-  // }
 }
 
 #stars2 {
@@ -31,16 +21,6 @@ html {
   background: transparent;
   box-shadow: $shadows-medium;
   animation: animStar 100s linear infinite;
-
-  // &:after {
-  //   content: " ";
-  //   position: absolute;
-  //   top: 2000px;
-  //   width: 2px;
-  //   height: 2px;
-  //   background: transparent;
-  //   box-shadow: $shadows-medium;
-  // }
 }
 
 #stars3 {
@@ -49,16 +29,6 @@ html {
   background: transparent;
   box-shadow: $shadows-big;
   animation: animStar 150s linear infinite;
-
-  // &:after {
-  //   content: " ";
-  //   position: absolute;
-  //   top: 2000px;
-  //   width: 3px;
-  //   height: 3px;
-  //   background: transparent;
-  //   box-shadow: $shadows-big;
-  // }
 }
 
 /************************************ ANIMATED BACKGROUND *********************************/
