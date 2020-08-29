@@ -1,24 +1,27 @@
 {
-  "name": "hyx131.github.io",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "hexo-site",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "node-sass -w scss/ -o public/css/ --recursive"
+    "build": "hexo generate",
+    "clean": "hexo clean",
+    "deploy": "hexo deploy",
+    "server": "hexo server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hyx131/hyx131.github.io.git"
+  "hexo": {
+    "version": "5.1.1"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hyx131/hyx131.github.io/issues"
-  },
-  "homepage": "https://github.com/hyx131/hyx131.github.io#readme",
   "dependencies": {
-    "node-sass": "^4.12.0"
-  },
-  "devDependencies": {}
+    "hexo": "^5.0.0",
+    "hexo-generator-archive": "^1.0.0",
+    "hexo-generator-category": "^1.0.0",
+    "hexo-generator-index": "^2.0.0",
+    "hexo-generator-search": "^2.4.0",
+    "hexo-generator-tag": "^1.0.0",
+    "hexo-renderer-ejs": "^1.0.0",
+    "hexo-renderer-marked": "^3.0.0",
+    "hexo-renderer-scss": "^1.2.0",
+    "hexo-renderer-stylus": "^2.0.0",
+    "hexo-server": "^2.0.0"
+  }
 }
