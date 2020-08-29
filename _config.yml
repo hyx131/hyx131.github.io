@@ -115,4 +115,6 @@ theme: oranges
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: https://github.com/hyx131/hyx131.github.io
+  branch: master
