@@ -8,7 +8,8 @@ tags:
 
 ## About Me
 ---
-Hello! I'm [hyx131](https://github.com/hyx131), a neuroscience student turned web developer. Welcome to my blog -- _Random Zone_.
+Hello! I'm [hyx131](https://github.com/hyx131), a neuroscience student turned web developer. Welcome to my blog -- _Random Zone_.  
+For true randomness, click [here](https://hyx131.github.io/hyx.github.io/).
 
 [GitHub](https://github.com/hyx131) | [Linkedin](https://www.linkedin.com/in/selinhuang/)
 
