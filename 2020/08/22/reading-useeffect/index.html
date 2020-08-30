@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="author" content="zchengsite, 1451426471@qq.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  
+  <title>The useEffect Hook | hyx131</title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/"><img src="/images/avatar.png" alt=""></a>
+    <div class="nickname"><a href="/">Random Zone</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Dashboard</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">The useEffect Hook</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间 | updatetime"></i>
+          2020-08-22
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="类别 | categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Reading/" title="查看 Reading 分类">
+                    <b>#</b> Reading
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签 | tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/React/" title="查看 React 标签">
+                    <b>#</b> React
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>Blogs under <em>‘Reading’</em> category mainly gives highlights/snippets of the topic post for my personal learning purposes (may also contain other learning notes on the side).<br>For this topic in full, you can visit the original post here:</p>
+<blockquote>
+<p><em>Title</em>: A Complete Guide to useEffect<br><em>Author</em>: <a target="_blank" rel="noopener" href="http://iqkui.com/">Dan Abramov</a><br><em>Path</em>: <a target="_blank" rel="noopener" href="http://iqkui.com/a-complete-guide-to-useeffect/">http://iqkui.com/a-complete-guide-to-useeffect/</a></p>
+</blockquote>
+</blockquote>
+<p>&nbsp;  </p>
+<h3 id="Rendering"><a href="#Rendering" class="headerlink" title="Rendering"></a>Rendering</h3><p>Each render has its own props &amp; state &amp; event handlers &amp; effect &amp; …everything.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// During first render</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Counter</span></span>() &#123;</span><br><span class="line">  const count = 0; // Returned by useState()</span><br><span class="line">  // ...</span><br><span class="line">  &lt;p&gt;You clicked &#123;count&#125; <span class="built_in">times</span>&lt;/p&gt;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// After a click, our <span class="keyword">function</span> is called again</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Counter</span></span>() &#123;</span><br><span class="line">  const count = 1; // Returned by useState()</span><br><span class="line">  // ...</span><br><span class="line">  &lt;p&gt;You clicked &#123;count&#125; <span class="built_in">times</span>&lt;/p&gt;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// After another click, our <span class="keyword">function</span> is called again</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Counter</span></span>() &#123;</span><br><span class="line">  const count = 2; // Returned by useState()</span><br><span class="line">  // ...</span><br><span class="line">  &lt;p&gt;You clicked &#123;count&#125; <span class="built_in">times</span>&lt;/p&gt;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>When update the state (<code>setCount</code>), React calls component again with a different value for <code>count</code> (which is a <em>constant</em> inside the function).<br>Each render = component gets called <em>again</em> with a <em>different</em> <code>count</code> value (which was set as a constant) for that particular render.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Counter</span></span>() &#123;</span><br><span class="line">  const [count, setCount] = useState(0);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="function"><span class="title">handleAlertClick</span></span>() &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      alert(<span class="string">&#x27;You clicked on: &#x27;</span> + count);</span><br><span class="line">    &#125;, 3000);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;You clicked &#123;count&#125; <span class="built_in">times</span>&lt;/p&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;</span><br><span class="line">        Click me</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;handleAlertClick&#125;&gt;</span><br><span class="line">        Show alert</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// During first render</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Counter</span></span>() &#123;</span><br><span class="line">  // ...</span><br><span class="line">  <span class="keyword">function</span> <span class="function"><span class="title">handleAlertClick</span></span>() &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      alert(<span class="string">&#x27;You clicked on: &#x27;</span> + 0);</span><br><span class="line">    &#125;, 3000);</span><br><span class="line">  &#125;</span><br><span class="line">  // ...</span><br><span class="line">  &lt;button onClick=&#123;handleAlertClick&#125; /&gt; // The one with 0 inside</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// After a click, our <span class="keyword">function</span> is called again</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Counter</span></span>() &#123;</span><br><span class="line">  // ...</span><br><span class="line">  <span class="keyword">function</span> <span class="function"><span class="title">handleAlertClick</span></span>() &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      alert(<span class="string">&#x27;You clicked on: &#x27;</span> + 1);</span><br><span class="line">    &#125;, 3000);</span><br><span class="line">  &#125;</span><br><span class="line">  // ...</span><br><span class="line">  &lt;button onClick=&#123;handleAlertClick&#125; /&gt; // The one with 1 inside</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Above example: although the function is async, but the handler will still “see” the value at the time it is being called. Because inside each render, props and state and any values using them (including event handlers) “belongs” to that particular render, thus variables in their scope will only “see” the value for that particular component call.</p>
+<h3 id="Effect-Cleanup"><a href="#Effect-Cleanup" class="headerlink" title="Effect Cleanup"></a>Effect Cleanup</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// First render, props are &#123;id: 10&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Example</span></span>() &#123;</span><br><span class="line">  // ...</span><br><span class="line">  useEffect(</span><br><span class="line">    // Effect from first render</span><br><span class="line">    () =&gt; &#123;</span><br><span class="line">      ChatAPI.subscribeToFriendStatus(10, handleStatusChange);</span><br><span class="line">      // Cleanup <span class="keyword">for</span> effect from first render</span><br><span class="line">      <span class="built_in">return</span> () =&gt; &#123;</span><br><span class="line">        ChatAPI.unsubscribeFromFriendStatus(10, handleStatusChange);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Next render, props are &#123;id: 20&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Example</span></span>() &#123;</span><br><span class="line">  // ...</span><br><span class="line">  useEffect(</span><br><span class="line">    // Effect from second render</span><br><span class="line">    () =&gt; &#123;</span><br><span class="line">      ChatAPI.subscribeToFriendStatus(20, handleStatusChange);</span><br><span class="line">      // Cleanup <span class="keyword">for</span> effect from second render</span><br><span class="line">      <span class="built_in">return</span> () =&gt; &#123;</span><br><span class="line">        ChatAPI.unsubscribeFromFriendStatus(20, handleStatusChange);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Cleanup function is called before the next render, values it “sees” = values captured in current render.</p>
+<h3 id="Synchronization"><a href="#Synchronization" class="headerlink" title="Synchronization"></a>Synchronization</h3><p>Not lifecycle. <em>React is about the destination, not journey</em>.<br>React synchronizes DOM according to current state &amp; props. Same goes with <code>useEffect</code>: allow for synchronize things outside of React tree according to current props &amp; state. This is different from the mental model of <em>mount/update/unmount</em> (which is the journey), would fail to <em>synchronize</em> the results if attempt to write an effect that behaves differently depending on whether the component renders for the first time or not.</p>
+<h3 id="Diff-Effects"><a href="#Diff-Effects" class="headerlink" title="Diff Effects"></a>Diff Effects</h3><p>Running all effects on <em>every</em> render = not efficient (could also lead to infinite loops). Fix by doing the following:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    document.title = <span class="string">&#x27;Hello, &#x27;</span> + name;</span><br><span class="line">  &#125;, [name]); // Our deps</span><br><span class="line"></span><br><span class="line">  const oldEffect = () =&gt; &#123; document.title = <span class="string">&#x27;Hello, Dan&#x27;</span>; &#125;;</span><br><span class="line">const oldDeps = [<span class="string">&#x27;Dan&#x27;</span>];</span><br><span class="line"></span><br><span class="line">const newEffect = () =&gt; &#123; document.title = <span class="string">&#x27;Hello, Dan&#x27;</span>; &#125;;</span><br><span class="line">const newDeps = [<span class="string">&#x27;Dan&#x27;</span>];</span><br><span class="line"></span><br><span class="line">// React can<span class="string">&#x27;t peek inside of functions, but it can compare deps.</span></span><br><span class="line"><span class="string">// Since all deps are the same, it doesn’t need to run the new effect.</span></span><br></pre></td></tr></table></figure>
+<p>Avoid re-running effect by providing dependency array, will check agains this array during every render, and run the effect if one (or more) of values in the array is different from the previous render.</p>
+<h3 id="Dependency-Honesty"><a href="#Dependency-Honesty" class="headerlink" title="Dependency Honesty"></a>Dependency Honesty</h3><ol>
+<li>include <em>all</em> values insdie the component that are used inside the effect.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">  const id = setInterval(() =&gt; &#123;</span><br><span class="line">    setCount(count + 1);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">  <span class="built_in">return</span> () =&gt; clearInterval(id);</span><br><span class="line">&#125;, [count]);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>change effect code to reduce dependencies needed.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">  const id = setInterval(() =&gt; &#123;</span><br><span class="line">    setCount(c =&gt; c + 1);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">  <span class="built_in">return</span> () =&gt; clearInterval(id);</span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+<p>For the <code>count</code> example, could remove <code>count</code> from dependency array by using the <a target="_blank" rel="noopener" href="https://reactjs.org/docs/hooks-reference.html#functional-updates">functional updater form</a> of <code>setState</code>.</p>
+<h3 id="Decouple-Updates-from-Actions"><a href="#Decouple-Updates-from-Actions" class="headerlink" title="Decouple Updates from Actions"></a>Decouple Updates from Actions</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Counter</span></span>() &#123;</span><br><span class="line">  const [count, setCount] = useState(0);</span><br><span class="line">  const [step, setStep] = useState(1);</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    const id = setInterval(() =&gt; &#123;</span><br><span class="line">      setCount(c =&gt; c + step);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">    <span class="built_in">return</span> () =&gt; clearInterval(id);</span><br><span class="line">  &#125;, [step]);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;h1&gt;&#123;count&#125;&lt;/h1&gt;</span><br><span class="line">      &lt;input value=&#123;step&#125; onChange=&#123;e =&gt; setStep(Number(e.target.value))&#125; /&gt;</span><br><span class="line">    &lt;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Added another dependency <code>step</code>, if want to avoid effect from calling on changes to <code>step</code>, could use <code>useReducer</code> to remove <code>step</code> from dependency array.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const [state, dispatch] = useReducer(reducer, initialState);</span><br><span class="line">const &#123; count, step &#125; = state;</span><br><span class="line"></span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">  const id = setInterval(() =&gt; &#123;</span><br><span class="line">    dispatch(&#123; <span class="built_in">type</span>: <span class="string">&#x27;tick&#x27;</span> &#125;); // Instead of setCount(c =&gt; c + step);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">  <span class="built_in">return</span> () =&gt; clearInterval(id);</span><br><span class="line">&#125;, [dispatch]);</span><br></pre></td></tr></table></figure>
+<p>React guarantees the dispatch function to be constant throughout the component lifetime.<br><em>(You may omit dispatch, setState, and useRef container values from the deps because React guarantees them to be static. But it also doesn’t hurt to specify them.)</em><br>When setting a state variable depends on the current value of another state variable, replace both with <code>useReducer</code>. Consider <code>useReducer</code> for cases where <code>setSomething(something =&gt; ...)</code> is necessary.<br><code>useReducer</code> allow to decouple expressing the “actions” that happened in your component from how the state updates in response to them (decouple the update logic from describing what happened).</p>
+<h3 id="Functions-in-Effects"><a href="#Functions-in-Effects" class="headerlink" title="Functions in Effects"></a>Functions in Effects</h3><p>Move function directly into effect:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">SearchResults</span></span>() &#123;</span><br><span class="line">  // ...</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    // We moved these <span class="built_in">functions</span> inside!</span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">getFetchUrl</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="string">&#x27;https://hn.algolia.com/api/v1/search?query=react&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    async <span class="keyword">function</span> <span class="function"><span class="title">fetchData</span></span>() &#123;</span><br><span class="line">      const result = await axios(getFetchUrl());</span><br><span class="line">      setData(result.data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, []); // ✅ Deps are OK</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If use any state values inside the function, will need to add that state into the dependency array:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">SearchResults</span></span>() &#123;</span><br><span class="line">  const [query, setQuery] = useState(<span class="string">&#x27;react&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">getFetchUrl</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="string">&#x27;https://hn.algolia.com/api/v1/search?query=&#x27;</span> + query;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    async <span class="keyword">function</span> <span class="function"><span class="title">fetchData</span></span>() &#123;</span><br><span class="line">      const result = await axios(getFetchUrl());</span><br><span class="line">      setData(result.data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, [query]); // ✅ Deps are OK</span><br><span class="line"></span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If functions does not use any values from within the component scope, can hoist the functions to remove them from dependency array:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// ✅ Not affected by the data flow</span><br><span class="line"><span class="keyword">function</span> getFetchUrl(query) &#123;</span><br><span class="line">  <span class="built_in">return</span> <span class="string">&#x27;https://hn.algolia.com/api/v1/search?query=&#x27;</span> + query;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">SearchResults</span></span>() &#123;</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    const url = getFetchUrl(<span class="string">&#x27;react&#x27;</span>);</span><br><span class="line">    // ... Fetch data and <span class="keyword">do</span> something ...</span><br><span class="line">  &#125;, []); // ✅ Deps are OK</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    const url = getFetchUrl(<span class="string">&#x27;redux&#x27;</span>);</span><br><span class="line">    // ... Fetch data and <span class="keyword">do</span> something ...</span><br><span class="line">  &#125;, []); // ✅ Deps are OK</span><br><span class="line"></span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Can also use <code>useCallback</code> hook:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">SearchResults</span></span>() &#123;</span><br><span class="line">  // ✅ Preserves identity when its own deps are the same</span><br><span class="line">  const getFetchUrl = useCallback((query) =&gt; &#123;</span><br><span class="line">    <span class="built_in">return</span> <span class="string">&#x27;https://hn.algolia.com/api/v1/search?query=&#x27;</span> + query;</span><br><span class="line">  &#125;, []);  // ✅ Callback deps are OK</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    const url = getFetchUrl(<span class="string">&#x27;react&#x27;</span>);</span><br><span class="line">    // ... Fetch data and <span class="keyword">do</span> something ...</span><br><span class="line">  &#125;, [getFetchUrl]); // ✅ Effect deps are OK</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    const url = getFetchUrl(<span class="string">&#x27;redux&#x27;</span>);</span><br><span class="line">    // ... Fetch data and <span class="keyword">do</span> something ...</span><br><span class="line">  &#125;, [getFetchUrl]); // ✅ Effect deps are OK</span><br><span class="line"></span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>useCallback</code> = adding another layer of dependency checks – make the function itself change when necessary (instead of calling effect on every change).</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间 | updatetime"></i>
+              2020-08-22
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="类别 | categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Reading/" title="查看 Reading 分类">
+                        <b>#</b> Reading
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签 | tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/React/" title="查看 React 标签">
+                        <b>#</b> React
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div class="post-catalog" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rendering"><span class="toc-text">Rendering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Effect-Cleanup"><span class="toc-text">Effect Cleanup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Synchronization"><span class="toc-text">Synchronization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Diff-Effects"><span class="toc-text">Diff Effects</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dependency-Honesty"><span class="toc-text">Dependency Honesty</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decouple-Updates-from-Actions"><span class="toc-text">Decouple Updates from Actions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Functions-in-Effects"><span class="toc-text">Functions in Effects</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        <div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/hyx131">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div class="footer-more">
+      <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">© 2020 hyx131. Powered by Hexo and Oranges</a>
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="back-to-top hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+      
+  <div class="search-icon" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile();
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+  </script>
+
+  
+<script src="/js/search.js"></script>
+
+
+
+
+    </div>
+  </body>
+</html>
