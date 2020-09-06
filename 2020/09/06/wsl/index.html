@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>归档 | hyx131</title>
+  <title>Windows Subsystem for Linux (WSL) | hyx131</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.png">
@@ -80,44 +80,144 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-    
-      
-        <!-- 第一篇文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2020</span>
-          </h2>
-        </div>
-      
-      <div class="post-item" title="Windows Subsystem for Linux (WSL)">
-        <div class="time-m-d">09-06</div>
-        <div class="title">
-          <a href="/2020/09/06/wsl/">
-            <span>Windows Subsystem for Linux (WSL)</span>
-          </a>
-        </div>
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Windows Subsystem for Linux (WSL)</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间 | updatetime"></i>
+          2020-09-06
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="类别 | categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Windows/" title="查看 Windows 分类">
+                    <b>#</b> Windows
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签 | tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/WSL/" title="查看 WSL 标签">
+                    <b>#</b> WSL
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
-    
+      <div class="markdown-body">
+        <p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/wsl/about">WSL</a> allow to run a GNU/Linux environment on windows without virtual machine/dualboot setup.</p>
+<p>Once enabled, can run Linux CLI as a Windows app:</p>
+<ol>
+<li><p>search in Windows start menu <code>Turn Windows feature on or off</code>, check <code>Windows Subsystem for Linux</code>, reboot computer.</p>
+</li>
+<li><p>search for Linux in Microsoft Store, can now download as Windows apps</p>
+<ul>
+<li>e.g. download Ubuntu CLI as windows app –&gt; opening the app launches the bash shell command line window.</li>
+</ul>
+</li>
+</ol>
+<p>Install homebrew on WSL:</p>
+<ol>
+<li><p>install as Linuxbrew:</p>
+<ul>
+<li><code>sh -c &quot;$(curl -fsSL [https://raw.githubusercontent.com/Linuxbrew install/master/install.sh](https://raw.githubusercontent.com/Linuxbrew install/master/install.sh))&quot;</code></li>
+</ul>
+</li>
+<li><p>add Linuxbrew to PATH:</p>
+<blockquote>
+<p><strong>Note</strong>: hoembrew on MacOS will install packages to <code>/user/local/bin</code>, Linuxbrew will install packages to <code>/home/linuxbrew/.linuxbrew/bin</code>(thus need to add this to PATH)</p>
+</blockquote>
+<ul>
+<li>add to PATH:<ul>
+<li><code>vi ~/.bashrc</code></li>
+<li><code>export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+      </div>
       
-      <div class="post-item" title="The useEffect Hook">
-        <div class="time-m-d">08-22</div>
-        <div class="title">
-          <a href="/2020/08/22/reading-useeffect/">
-            <span>The useEffect Hook</span>
-          </a>
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/08/22/reading-useeffect/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>PREV</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间 | updatetime"></i>
+              2020-09-06
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="类别 | categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Windows/" title="查看 Windows 分类">
+                        <b>#</b> Windows
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签 | tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/WSL/" title="查看 WSL 标签">
+                        <b>#</b> WSL
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
         </div>
+      
+    </div>
+    
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         <div class="footer">
   <div class="social">

@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Windows Subsystem for Linux (WSL)</title>
+      <link href="/2020/09/06/wsl/"/>
+      <url>/2020/09/06/wsl/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://docs.microsoft.com/en-us/windows/wsl/about">WSL</a> allow to run a GNU/Linux environment on windows without virtual machine/dualboot setup.</p><p>Once enabled, can run Linux CLI as a Windows app:</p><ol><li><p>search in Windows start menu <code>Turn Windows feature on or off</code>, check <code>Windows Subsystem for Linux</code>, reboot computer.</p></li><li><p>search for Linux in Microsoft Store, can now download as Windows apps</p><ul><li>e.g. download Ubuntu CLI as windows app –&gt; opening the app launches the bash shell command line window.</li></ul></li></ol><p>Install homebrew on WSL:</p><ol><li><p>install as Linuxbrew:</p><ul><li><code>sh -c &quot;$(curl -fsSL [https://raw.githubusercontent.com/Linuxbrew install/master/install.sh](https://raw.githubusercontent.com/Linuxbrew install/master/install.sh))&quot;</code></li></ul></li><li><p>add Linuxbrew to PATH:</p><blockquote><p><strong>Note</strong>: hoembrew on MacOS will install packages to <code>/user/local/bin</code>, Linuxbrew will install packages to <code>/home/linuxbrew/.linuxbrew/bin</code>(thus need to add this to PATH)</p></blockquote><ul><li>add to PATH:<ul><li><code>vi ~/.bashrc</code></li><li><code>export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin</code></li></ul></li></ul></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Windows </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> WSL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>The useEffect Hook</title>
       <link href="/2020/08/22/reading-useeffect/"/>
       <url>/2020/08/22/reading-useeffect/</url>
